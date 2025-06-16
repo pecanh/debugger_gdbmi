@@ -1,0 +1,6 @@
+# Always use LF for these files
+*.sh text eol=lf
+# Always use CRLF for Windows-specific files
+*.bat text eol=crlf
+# Default behavior for other text files
+* text=auto

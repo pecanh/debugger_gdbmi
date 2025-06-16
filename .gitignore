@@ -1,0 +1,7 @@
+plugin/.cache/
+plugin/compile_commands.json
+*.7z
+*.bmarks
+*.layout
+plugin/bin/
+plugin/obj/
