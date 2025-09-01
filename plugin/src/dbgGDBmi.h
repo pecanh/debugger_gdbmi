@@ -310,13 +310,17 @@ class Debugger_GDB_MI : public cbDebuggerPlugin
 };
 #endif // _Debugger_GDB_MI_PLUGIN_H_
 //-----Release-Feature-Fix------------------
-#define VERSION wxT("2.2.22 25/05/14")
+#define VERSION wxT("2.2.24 T 2025/08/31")
 //------------------------------------------
 // Release - Current development identifier
 // Feature - User interface level
 // Fix     - bug fix or non UI breaking addition
 //
 //Versions
+// 2025/08/31   2.2.24 Allow "output.Contains(_("error,msg="))". It's now used for
+//                     non critical, non abort messages in newer GDB like "var out of scope".
+//                     See: cmd_queue.cpp line 168
+// 2025/08/21   2.2.23 T Find cause of errors on shutdown of app
 // 2025/05/14   Log critical error message in red
 //              Queue command to abort debugger after critical errors
 // 2025/04/02   2.2.22 If gdbinit file is size(0) do not use it.

@@ -268,17 +268,16 @@ class WatchCreateAction : public WatchBaseAction
 {
     enum Step
     {
-        StepCreate = 0,
+        StepCheckExpr = 0,   // <-- new step
+        StepCreate,
         StepListChildren,
         StepSetRange
     };
 public:
     WatchCreateAction(Watch::Pointer const &watch, WatchesContainer &watches, Logger &logger);
-
     virtual void OnCommandOutput(CommandID const &id, ResultParser const &result);
 protected:
     virtual void OnStart();
-
 protected:
     Watch::Pointer m_watch;
     Step m_step;

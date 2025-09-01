@@ -701,23 +701,37 @@ void WatchCreateAction::OnCommandOutput(CommandID const &id, ResultParser const 
     --m_sub_commands_left;
     m_logger.Debug(_T("WatchCreateAction::OnCommandOutput - processing command ") + id.ToString());
     bool error = false;
+
     if(result.GetResultClass() == ResultParser::ClassDone)
     {
         ResultValue const &value = result.GetResultValue();
         switch(m_step)
         {
+        case StepCheckExpr:
+            {
+                // Expression is valid, proceed with -var-create
+                wxString symbol;
+                m_watch->GetSymbol(symbol);
+                symbol.Replace(_T("\""), _T("\\\""));
+
+                Execute(wxString::Format(_T("-var-create - @ \"%s\""), symbol.c_str()));
+                m_step = StepCreate;
+                m_sub_commands_left = 1; // expecting another response
+            }
+            break;
+
         case StepCreate:
             {
                 bool dynamic, has_more;
                 int children;
                 ParseWatchInfo(value, children, dynamic, has_more);
                 ParseWatchValueID(*m_watch, value);
+
                 if(dynamic && has_more)
                 {
                     m_step = StepSetRange;
                     Execute(_T("-var-set-update-range \"") + m_watch->GetID() + _T("\" 0 100"));
                     AppendNullChild(m_watch);
-
                 }
                 else if(children > 0)
                 {
@@ -726,14 +740,16 @@ void WatchCreateAction::OnCommandOutput(CommandID const &id, ResultParser const 
                 }
                 else
                     Finish();
-                // set frozen if Auto Update is off
+
                 if ( (not m_watch->IsAutoUpdateEnabled()) && (not m_watch->GetID().empty()) )
-                    Execute(_T("-var-set-frozen ") + m_watch->GetID() +_T(" 1") );
+                    Execute(_T("-var-set-frozen ") + m_watch->GetID() + _T(" 1"));
             }
             break;
+
         case StepListChildren:
             error = !ParseListCommand(id, value);
             break;
+
         case StepSetRange:
             break;
         }
@@ -741,21 +757,23 @@ void WatchCreateAction::OnCommandOutput(CommandID const &id, ResultParser const 
     else
     {
         if(result.GetResultClass() == ResultParser::ClassError)
-            m_watch->SetValue(_T("The expression can't be evaluated"));
-
+        {
+            if (m_step == StepCheckExpr)
+            {
+                // Expression invalid, don't attempt -var-create
+                m_watch->SetValue(_T("The expression can't be evaluated"));
+            }
+            else
+            {
+                m_watch->SetValue(_T("Error creating watch"));
+            }
+        }
         error = true;
-
-        // Display special messages
         const ResultValue &value = result.GetResultValue();
         wxString message;
         if (Lookup(value, _T("msg"), message))
         {
-////            if (message.StartsWith(_T("<any special word>")))
-////            {
-////                m_watch->SetValue(message);
-////                error = false;
-////                InfoWindow::Display(_("Watch Error"), message + _T("\n\n"), 7000);
-////            }
+            // Handle debugger message here if needed
         }
     }
 
@@ -767,20 +785,18 @@ void WatchCreateAction::OnCommandOutput(CommandID const &id, ResultParser const 
     }
     else if(m_sub_commands_left == 0)
     {
-        m_logger.Debug(_T("WatchCreateAction::Output - finishing at") + id.ToString());
+        m_logger.Debug(_T("WatchCreateAction::Output - finishing at ") + id.ToString());
         UpdateWatches(m_logger);
         Finish();
     }
 
-    // parse error on malformed response
     if (result.GetParseError())
     {
         m_logger.Debug(_T("WatchCreateAction::Output - parse error ") + id.ToString());
         m_watch->SetValue(_T("Malformed debugger response"));
         UpdateWatches(m_logger);
         Finish();
-    }// parse error
-
+    }
 }
 
 // ----------------------------------------------------------------------------
@@ -790,7 +806,10 @@ void WatchCreateAction::OnStart()
     wxString symbol;
     m_watch->GetSymbol(symbol);
     symbol.Replace(_T("\""), _T("\\\""));
-    Execute(wxString::Format(_T("-var-create - @ \"%s\""), symbol.c_str()));
+
+    // First check expression validity using "sizeof(var)"
+    Execute(wxString::Format(_T("-data-evaluate-expression sizeof(%s)"), symbol.c_str()));
+    m_step = StepCheckExpr;
     m_sub_commands_left = 1;
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

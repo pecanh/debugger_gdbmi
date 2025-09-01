@@ -165,7 +165,9 @@ bool CommandExecutor::ProcessOutput(wxString const &output)
                     || output.Contains(_("No executable file specified"))
                     || output.Contains(_("No executable specified"))
                     || output.Contains(_("Don't know how to run"))
-                    || output.Contains(_("error,msg="))
+                    //- || output.Contains(_("error,msg=")) // (ph 25/08/31)
+                    // allow the error msg above
+                    // newer GDB uses the above when var is out of scope
                 )
             {
                 m_logger->Debug(_T("output==>") + output, Logger::Line::Error); // (ph 25/05/14)

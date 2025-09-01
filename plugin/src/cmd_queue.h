@@ -336,7 +336,7 @@ bool DispatchResults(CommandExecutor &exec, ActionsMap &actions_map, OnNotify &o
 
         switch(parser->GetResultType())
         {
-        case ResultParser::Result:
+            case ResultParser::Result:
             {
                 Action *action = actions_map.Find(id.GetActionID());
                 if(action)
@@ -381,16 +381,17 @@ bool DispatchResults(CommandExecutor &exec, ActionsMap &actions_map, OnNotify &o
 
                 }//endwhile
                 //end Show RunActionMsg
-            }
-            break;
-        case ResultParser::TypeUnknown:
-            break;
-        default:
-            on_notify(*parser);
-        }
+                break;
+            }//endCase result
+            case ResultParser::TypeUnknown:
+                break;
+            default:
+                on_notify(*parser);
+        }//endSwitch
 
         delete parser;
-    }
+    }//endWhile HasOutput
+
     return true;
 }
 
