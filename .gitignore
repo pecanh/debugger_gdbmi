@@ -3,6 +3,7 @@ plugin/compile_commands.json
 *.7z
 *.bmarks
 *.layout
+*.bak
 plugin/bin/
 plugin/obj/
 personality/
