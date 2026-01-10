@@ -1,0 +1,7 @@
+<Debugger_layout_file>
+    <CompilerInfo>
+        <CompilerName>GNU GCC Compiler</CompilerName>
+        <DBGconfig>gdb_debugger:GDB14</DBGconfig>
+    </CompilerInfo>
+    <WatchesList count="0"/>
+</Debugger_layout_file>

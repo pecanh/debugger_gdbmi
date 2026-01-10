@@ -5,3 +5,6 @@ plugin/compile_commands.json
 *.layout
 plugin/bin/
 plugin/obj/
+personality/
+tests/
+plugin/test.cbp

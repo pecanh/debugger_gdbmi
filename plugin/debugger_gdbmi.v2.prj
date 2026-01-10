@@ -1,0 +1,4 @@
+[Watches]
+1=m_Version;0;0;0;0
+[Breakpoints]
+1=Code;enabled;src\\plugin.cpp;2764;0;false;;false

@@ -1,0 +1,7 @@
+python
+import sys
+sys.path.insert(0, r'F:\usr\Proj\wxWidgets3260\misc\gdb')  # Path to print.py
+import print
+# The pretty-printers should already be registered by the appending of wxLookupFunction
+# in print.py, so we don't need to call any additional registration function.
+end
