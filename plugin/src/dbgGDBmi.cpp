@@ -1021,7 +1021,7 @@ int Debugger_GDB_MI::LaunchDebugger(wxString const &debugger, wxString const &de
 
     if(isConsole) // Console project target?
     {
-        if (platform::platform_windows) // (ph 26/01/09)
+        if (platform::windows) // (ph 26/01/11)
         {
             DoSendCommand(_T("set new-console on"));
         }
