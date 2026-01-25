@@ -1021,7 +1021,7 @@ int Debugger_GDB_MI::LaunchDebugger(wxString const &debugger, wxString const &de
 
     if(isConsole) // Console project target?
     {
-        if (platform::windows) // (ph 26/01/11)
+        if (platform::windows) // (ph 26/01/09)
         {
             DoSendCommand(_T("set new-console on"));
         }
@@ -2324,11 +2324,20 @@ void Debugger_GDB_MI::GetCurrentPosition(wxString &filename, int &line)
 void Debugger_GDB_MI::KillConsole()
 // ----------------------------------------------------------------------------
 {
+#ifdef __WXMSW__
     if(m_console_pid >= 0)
     {
-        wxKill(m_console_pid);
+        wxKill(m_console_pid, wxSIGKILL, nullptr, wxKILL_CHILDREN);
         m_console_pid = -1;
     }
+#else
+    // kill any linux console
+    if ( m_console_pid && (m_console_pid > 0) )
+    {
+       ::wxKill(m_console_pid, wxSIGTERM, nullptr, wxKILL_CHILDREN); //ticket 1571
+        m_console_pid = 0;
+    }
+#endif
 }
 
 // ----------------------------------------------------------------------------

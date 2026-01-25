@@ -508,10 +508,11 @@ void GDBExecutor::DoClear()
 void GDBExecutor::InterruptChild(int child_pid)
 // ----------------------------------------------------------------------------
 {
-#ifndef __WXMSW__
+#ifndef __WXMSW__   //Linux
     wxKillError error;
-    wxKill(child_pid, wxSIGINT, &error);
-#else //is __WXMSW__
+    //-wxKill(m_console_pid, wxSIGINT, &error);
+    wxKill(m_console_pid, wxSIGKILL, &error, wxKILL_CHILDREN);
+#else //is __WXMSW__//Windows
     // note - There's no child_pid for a remote process
     if (DebugBreakProcessFunc)
     {

@@ -311,13 +311,14 @@ class Debugger_GDB_MI : public cbDebuggerPlugin
 };
 #endif // _Debugger_GDB_MI_PLUGIN_H_
 //-----Release-Feature-Fix------------------
-#define VERSION wxT("2.2.25 26/01/10")
+#define VERSION wxT(".2.25 26/01/10")
 //------------------------------------------
 // Release - Current development identifier
 // Feature - User interface level
 // Fix     - bug fix or non UI breaking addition
 //
 //Versions
+// 2026/01/24   2.2.26 Add wxKILL_CHILDREN to wxKill calls.
 // 2026/01/10   2.2.25 Send GDB "set new-console on" command when target is console application
 // 2025/08/31   2.2.24 Allow "output.Contains(_("error,msg="))". It's now used for
 //                     non critical, non abort messages in newer GDB like "var out of scope".
