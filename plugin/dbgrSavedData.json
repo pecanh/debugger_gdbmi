@@ -1,5 +1,0 @@
-{
- "debugger_mi": {
-  "breakpoints": ["Code;enabled;src\\dbgGDBmi.cpp;1026;0;false;;false"]
- }
-}

@@ -11,8 +11,8 @@
 #include <wx/busyinfo.h>
 
 #include <cbdebugger_interfaces.h>
-#include <cbproject.h>
 #include <compilerfactory.h>
+#include <cbproject.h>
 #include <configurationpanel.h>
 #include <configmanager.h>
 #include <editbreakpointdlg.h>
@@ -98,6 +98,8 @@ namespace
 // ----------------------------------------------------------------------------
 // events handling
 // ----------------------------------------------------------------------------
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wcast-function-type"
 BEGIN_EVENT_TABLE(Debugger_GDB_MI, cbDebuggerPlugin)
 
     EVT_MENU(idMenuWatchDereference, Debugger_GDB_MI::OnMenuWatchDereference)
@@ -112,7 +114,7 @@ BEGIN_EVENT_TABLE(Debugger_GDB_MI, cbDebuggerPlugin)
 
     EVT_MENU(id_menu_info_command_stream, Debugger_GDB_MI::OnMenuInfoCommandStream)
 END_EVENT_TABLE()
-
+#pragma GCC diagnostic pop
 // constructor
 // ----------------------------------------------------------------------------
 Debugger_GDB_MI::Debugger_GDB_MI()
@@ -791,6 +793,7 @@ void Debugger_GDB_MI::CleanupWhenProjectClosed(cbProject *project)
 void Debugger_GDB_MI::InitWhenProjectOpened(cbProject *project)
 // ----------------------------------------------------------------------------
 {
+    wxUnusedVar(project);
     //(ph 2024/03/06)begin: InitWhenProjectOpened
     //  OnProjectActivated is no good here because LoadingOrClosing() is always true
     //  so we get called on cbCVT_PROJECT_OPEN when loading is finished.
@@ -2334,7 +2337,7 @@ void Debugger_GDB_MI::KillConsole()
     // kill any linux console
     if ( m_console_pid && (m_console_pid > 0) )
     {
-       ::wxKill(m_console_pid, wxSIGTERM, nullptr, wxKILL_CHILDREN); //ticket 1571
+       ::wxKill(m_console_pid, wxSIGINT, nullptr, wxKILL_CHILDREN); //ticket 1571
         m_console_pid = 0;
     }
 #endif
@@ -3105,6 +3108,8 @@ void Debugger_GDB_MI::OnProjectLoadingHook(cbProject* project, TiXmlElement* ele
 void Debugger_GDB_MI::LoadProjectBreakpoints(cbProject* pProject, TiXmlElement* elem, bool loading)
 // ----------------------------------------------------------------------------
 {
+    wxUnusedVar(loading);
+    wxUnusedVar(elem);
     // Check if the breakpoint file exists
     wxString wrkingDir = pProject->GetBasePath();
     wxFileName filename = wrkingDir + fileSep + breakpointFilename;
@@ -3255,6 +3260,7 @@ void Debugger_GDB_MI::LoadProjectBreakpoints(cbProject* pProject, TiXmlElement* 
 void Debugger_GDB_MI::OnSaveProjectBreakpoints(wxCommandEvent& event)
 // ----------------------------------------------------------------------------
 {
+    wxUnusedVar(event);
     // Save breakpoint to a json file named "dbgrActnData.json"
     cbProject* pProject = Manager::Get()->GetProjectManager()->GetActiveProject();
     if (not pProject) return;

@@ -39,11 +39,13 @@ void InitDebuggingFuncs()
     kernelLib = LoadLibrary(TEXT("kernel32.dll"));
     if (kernelLib)
     {
-        DebugBreakProcessFunc = (DebugBreakProcessApiCall)GetProcAddress(kernelLib, "DebugBreakProcess");
-        //Windows XP
-        CreateToolhelp32SnapshotFunc = (CreateToolhelp32SnapshotApiCall)GetProcAddress(kernelLib, "CreateToolhelp32Snapshot");
-        Process32FirstFunc = (Process32FirstApiCall)GetProcAddress(kernelLib, "Process32First");
-        Process32NextFunc = (Process32NextApiCall)GetProcAddress(kernelLib, "Process32Next");
+        //-DebugBreakProcessFunc = (DebugBreakProcessApiCall)GetProcAddress(kernelLib, "DebugBreakProcess");
+        DebugBreakProcessFunc = (DebugBreakProcessApiCall)(void*)GetProcAddress(kernelLib, "DebugBreakProcess");
+        // Windows XP compatibility
+        DebugBreakProcessFunc = (DebugBreakProcessApiCall)(void*)GetProcAddress(kernelLib, "DebugBreakProcess");
+        CreateToolhelp32SnapshotFunc = (CreateToolhelp32SnapshotApiCall)(void*)GetProcAddress(kernelLib, "CreateToolhelp32Snapshot");
+        Process32FirstFunc = (Process32FirstApiCall)(void*)GetProcAddress(kernelLib, "Process32First");
+        Process32NextFunc = (Process32NextApiCall)(void*)GetProcAddress(kernelLib, "Process32Next");
     }
 }
 
@@ -510,8 +512,8 @@ void GDBExecutor::InterruptChild(int child_pid)
 {
 #ifndef __WXMSW__   //Linux
     wxKillError error;
-    //-wxKill(m_console_pid, wxSIGINT, &error);
-    wxKill(m_console_pid, wxSIGKILL, &error, wxKILL_CHILDREN);
+    //-wxKill(child_pid, wxSIGINT, &error);
+    wxKill(child_pid, wxSIGINT, &error, wxKILL_CHILDREN); //ticket 1571
 #else //is __WXMSW__//Windows
     // note - There's no child_pid for a remote process
     if (DebugBreakProcessFunc)

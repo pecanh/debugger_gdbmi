@@ -29,6 +29,8 @@ public:
     //-virtual void OnCommandOutput(CommandID const & /*id*/, ResultParser const & /*result*/)
     virtual void OnCommandOutput(CommandID const & id, ResultParser const & result)
     {
+        wxUnusedVar(id);
+        wxUnusedVar(result);
         Finish();
     }
 protected:
@@ -109,6 +111,7 @@ public:
     //-virtual void OnCommandOutput(CommandID const &/*id*/, ResultParser const &result)
     virtual void OnCommandOutput(CommandID const &id, ResultParser const &result)
     {
+        wxUnusedVar(id);
         if(result.GetResultClass() == ResultParser::ClassRunning)
         {
             m_logger.Debug(_T("RunAction success, the debugger is !stopped!"));

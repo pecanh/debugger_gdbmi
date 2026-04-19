@@ -39,6 +39,7 @@ bool GetNextToken(wxString const &str, int pos, Token &token)
 
     case _T('"'):
         in_quote = true;
+        /* FALLTHRU */
     default:
         token.type = Token::String;
         token.start = pos;
