@@ -1,0 +1,15 @@
+- The DebuggerMI_<NightlyBuildDate>_<revision>_<platform>.zip contains
+    an executable install, the plugin dll and resource zip files.
+- expand the zip file in a temporary folder.
+- The install program, dll, and resource zip file must be in the same folder.
+- Be sure that the CodeBlocks installation you are targeting is not running.
+- double click or run the 'InstallDebuggerMI.exe' program in a terminal.
+- The program will ask for a target CodeBlock Nightly installation.
+    The installation must match the Nightly Build Date and revision indicated by the
+    downloaded .zip file.
+-  Further instructions for the installation of the plugin are provided by the
+    executable program.
+- Once the installation is successul start the targeted CodeBlocks and navigate to
+    MainMenu/Settings/Debugger/'GDB/MI'. Fill in the gdb.exe location and any other options you want.
+- To use debugger_gdbmi, you will need select it in Mainmenu/Debug/Active Debuggers.
+
