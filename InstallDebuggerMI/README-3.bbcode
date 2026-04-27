@@ -1,0 +1,37 @@
+[b][size=14pt]Installation Guide: Debugger GDB/MI Plugin[/size][/b]
+A CodeBlocks plugin using the machine interface of the GDB debugger.
+
+[i]For Code::Blocks Nightly Build 260409_rev13831_win64 only.[/i]
+
+
+[color=blue][url=https://github.com/pecanh/debugger_gdbmi/releases/tag/%22Nightly_Releases%22]Download github binary zip[/url][/color]
+Source is available at github [color=blue][url=https://github.com/pecanh/debugger_gdbmi]Source[/url][/color]
+[hr]
+[b]1. Preparation[/b]
+[list]
+[li]Ensure Code::Blocks is [b]not running[/b].[/li]
+[li]Extract the ZIP contents into a temporary folder.[/li]
+[li][b]Note:[/b] While installing, the .exe, .dll, and .zip files must stay together.[/li]
+[/list]
+
+[b]2. Installation[/b]
+[list]
+[li]Run [color=blue][b]InstallDebuggerMI.exe[/b][/color].[/li]
+[li]Select your Code::Blocks Nightly folder when prompted.[/li]
+[li][i]Constraint:[/i] Your CB Nightly version date and revision must match the install zips file name.[/li]
+[li]Installing into a mismatched nightly version will cause it to stall and crash.[/li]
+[/list]
+
+[b]3. Configuration[/b]
+After installation, go to [b]Settings->Debugger->GDB/MI default[/b]
+[list]
+[li]Set the executable Path: Browse to your [b]gdb.exe[/b].[/li]
+[li]Verify the other options meet your requirements.[/li]
+[li]Click on the Ok button.[/li]
+[/list]
+
+[b]4. Usage[/b]
+Go to [b]MainMenu->Debug->Active Debuggers[/b] and select [b]GDB/MI default[/b].
+
+[hr]
+[size=8pt]Report issues in this thread with your Nightly Build date and OS.[/size]
