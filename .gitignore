@@ -1,11 +1,17 @@
-plugin/.cache/
-plugin/compile_commands.json
+# Ignore these folders wherever they appear
+**/.cache/
+**/obj/
+**/bin/
+
+# Ignore these specific generated/temp files everywhere
+**/compile_commands.json
 *.7z
 *.bmarks
 *.layout
 *.bak
-plugin/bin/
-plugin/obj/
-personality/
-tests/
-plugin/test.cbp
+*.obj
+*.depend
+
+# Root-specific ignores (Add / if these only exist in the main folder)
+/personality/
+/tests/
