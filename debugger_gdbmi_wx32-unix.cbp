@@ -7,20 +7,20 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="debugger_gdbmi">
-				<Option output="$(CODEBLOCKS)/../devel32/share/codeblocks/plugins/debugger_gdbmi" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="$(CODEBLOCKS)/../devel32" />
-				<Option object_output=".$(CODEBLOCKS)/../.obj32/plugins/contrib/debugger_gdbmi" />
+				<Option output="../../../devel32/share/codeblocks/plugins/debugger_gdbmi" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../../devel32" />
+				<Option object_output=".../../../.obj32/plugins/contrib/debugger_gdbmi" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option parameters="--debug-log --multiple-instance --no-splash-screen --verbose -p debug --no-ipc " />
-				<Option host_application="$(CODEBLOCKS)/../devel32/codeblocks" />
+				<Option host_application="../../../devel32/codeblocks" />
 				<Option run_host_application_in_terminal="0" />
 				<Option projectLinkerOptionsRelation="1" />
 				<Compiler>
 					<Add option="-DBUILDING_PLUGIN" />
-					<Add directory="$(CODEBLOCKS)/../include" />
-					<Add directory="$(CODEBLOCKS)/../sdk/wxscintilla/include/" />
-					<Add directory="$(CODEBLOCKS)/../include/tinyxml/" />
+					<Add directory="../../../include" />
+					<Add directory="../../../sdk/wxscintilla/include/" />
+					<Add directory="../../../include/tinyxml/" />
 					<Add directory="src" />
 				</Compiler>
 				<Linker>
@@ -29,8 +29,8 @@
 					<Add library="codeblocks" />
 				</Linker>
 				<ExtraCommands>
-					if [ ! -d "$(CODEBLOCKS)/../devel30/share/codeblocks/plugin" ]; then mkdir -p "$(CODEBLOCKS)/../devel30/share/codeblocks/plugin"; fi
-					<Add after="zip -j9 $(CODEBLOCKS)/../devel32/share/codeblocks/debugger_gdbmi.zip src/resources\manifest.xml" />
+					if [ ! -d "../../../devel30/share/codeblocks/plugin" ]; then mkdir -p "../../../devel30/share/codeblocks/plugin"; fi
+					<Add after="zip -j9 ../../../devel32/share/codeblocks/debugger_gdbmi.zip src/resources/manifest.xml" />
 					<Mode after="always" />
 				</ExtraCommands>
 			</Target>
@@ -64,7 +64,7 @@
 			<Add option="`$(WX_CONFIG) --libs std,aui,propgrid`" />
 			<Add option="`pkg-config --libs $(GTK_VERSION)`" />
 			<Add option="-Wl,--no-undefined" />
-			<Add directory="$(CODEBLOCKS)/../devel32" />
+			<Add directory="../../../devel32" />
 		</Linker>
 		<Unit filename="src/actions.cpp" />
 		<Unit filename="src/actions.h" />
